@@ -9,10 +9,6 @@
 	"IstioZipkinVersion":                      "1.16",
 	"IstioZipkinDownloadUrlTemplate":          "https://raw.githubusercontent.com/istio/istio/release-%s/samples/addons/extras/zipkin.yaml",
 	"MetalLBVersion":                          "0.13.9",
-	"MetalLBConfigURLArray": [
-		"https://raw.githubusercontent.com/vhive-serverless/vHive/main/configs/metallb/metallb-ipaddresspool.yaml",
-		"https://raw.githubusercontent.com/vhive-serverless/vHive/main/configs/metallb/metallb-l2advertisement.yaml"
-    ],
 	"LocalRegistryRepoVolumeSize":          "5Gi",
 	"LocalRegistryVolumeConfigUrl":         "https://raw.githubusercontent.com/vhive-serverless/vHive/main/configs/registry/repository-volume.yaml",
 	"LocalRegistryDockerRegistryConfigUrl": "https://raw.githubusercontent.com/vhive-serverless/vHive/main/configs/registry/docker-registry.yaml",
