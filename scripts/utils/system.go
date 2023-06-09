@@ -3,7 +3,6 @@ package utils
 
 import (
 	"bytes"
-	"flag"
 	"fmt"
 	"os"
 	"os/exec"
@@ -20,45 +19,6 @@ type ShellError struct {
 
 func (err *ShellError) Error() string {
 	return fmt.Sprintf("[exit %d] -> %s", err.ExitCode, err.Msg)
-}
-
-// Parse parameters for subcommand `system`
-func ParseSubcommandSystem(args []string) {
-	nodeRole := args[0]
-	operation := args[1]
-
-	// Check nodeRole
-	if (nodeRole != "master") && (nodeRole != "worker") {
-		InfoPrintf("Usage: %s %s <master | worker> init [parameters...]\n", os.Args[0], os.Args[1])
-		FatalPrintf("Invalid nodeRole: <nodeRole> -> %s\n", nodeRole)
-	}
-
-	// Check operation
-	if operation != "init" {
-		InfoPrintf("Usage: %s %s %s init [parameters...]\n", os.Args[0], os.Args[1], nodeRole)
-		FatalPrintf("Invalid operation: <operation> -> %s\n", operation)
-	}
-
-	// Parse parameters for `system master/worker init`
-	var help bool
-	systemFlagsName := fmt.Sprintf("%s system %s init", os.Args[0], nodeRole)
-	systemFlags := flag.NewFlagSet(systemFlagsName, flag.ExitOnError)
-	systemFlags.StringVar(&configs.System.GoVersion, "go-version", configs.System.GoVersion, "Golang version")
-	systemFlags.StringVar(&configs.System.ContainerdVersion, "containerd-version", configs.System.ContainerdVersion, "Containerd version")
-	systemFlags.StringVar(&configs.System.RuncVersion, "runc-version", configs.System.RuncVersion, "Runc version")
-	systemFlags.StringVar(&configs.System.CniPluginsVersion, "cni-plugins-version", configs.System.CniPluginsVersion, "CNI plugins version")
-	systemFlags.StringVar(&configs.System.KubectlVersion, "kubectl-version", configs.System.KubectlVersion, "Kubectl version")
-	systemFlags.StringVar(&configs.System.KubeadmVersion, "kubeadm-version", configs.System.KubeadmVersion, "Kubeadm version")
-	systemFlags.StringVar(&configs.System.KubeletVersion, "kubelet-version", configs.System.KubeletVersion, "Kubelet version")
-	systemFlags.BoolVar(&help, "help", false, "Show help")
-	systemFlags.BoolVar(&help, "h", false, "Show help")
-	systemFlags.Parse(args[2:])
-	// Show help
-	if help {
-		systemFlags.Usage()
-		os.Exit(0)
-	}
-	SuccessPrintf("Init System Successfully!\n")
 }
 
 // Execute Shell Command

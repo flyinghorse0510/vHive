@@ -10,6 +10,7 @@ import (
 	configs "github.com/vhive-serverless/vHive/scripts/configs"
 )
 
+// Append directory to current PATH variable
 func AppendDirToPathVariable(pathTemplate string, pars ...any) error {
 	oldPath := GetEnvironmentVariable("PATH")
 	appendedPath := fmt.Sprintf(pathTemplate, pars...)

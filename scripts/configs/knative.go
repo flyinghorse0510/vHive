@@ -19,7 +19,6 @@ type KnativeConfigStruct struct {
 	LocalRegistryDockerRegistryConfigUrl    string
 	LocalRegistryHostUpdateConfigUrl        string
 	MagicDNSConfigUrl                       string
-	VHiveMode                               bool
 }
 
 var Knative = KnativeConfigStruct{
@@ -41,7 +40,6 @@ var Knative = KnativeConfigStruct{
 	LocalRegistryDockerRegistryConfigUrl: "https://raw.githubusercontent.com/vhive-serverless/vHive/main/configs/registry/docker-registry.yaml",
 	LocalRegistryHostUpdateConfigUrl:     "https://raw.githubusercontent.com/vhive-serverless/vHive/main/configs/registry/repository-update-hosts.yaml",
 	MagicDNSConfigUrl:                    "https://raw.githubusercontent.com/vhive-serverless/vHive/main/configs/knative_yamls/serving-default-domain.yaml",
-	VHiveMode:                            true,
 }
 
 func (knative *KnativeConfigStruct) GetIstioDownloadUrl() string {
