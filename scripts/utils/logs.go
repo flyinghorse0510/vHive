@@ -6,8 +6,6 @@ import (
 	"log"
 	"os"
 	"time"
-
-	configs "github.com/vhive-serverless/vHive/scripts/configs"
 )
 
 var (
@@ -116,11 +114,6 @@ func CheckErrorWithTagAndMsg(err error, format string, pars ...any) bool {
 // Print general usage tips
 func PrintGeneralUsage() {
 	InfoPrintf("Usage: %s <object: system | kube | yurt> <nodeRole: master | worker> <operation: init | join | expand> [Parameters...]\n", os.Args[0])
-}
-
-// Print welcome information
-func PrintWelcomeInfo() {
-	coloredPrintf(_colorGreen, "<<<<<<<<< vHiveSetupScripts %s >>>>>>>>>\n", configs.Version)
 }
 
 // Print warning information
