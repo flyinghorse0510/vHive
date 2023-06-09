@@ -193,11 +193,13 @@ func InstallPackages(packagesTemplate string, pars ...any) error {
 	}
 }
 
+// Get the value of specific environment variable
 func GetEnvironmentVariable(variableNameTemplate string, pars ...any) string {
 	variableName := fmt.Sprintf(variableNameTemplate, pars...)
 	return os.Getenv(variableName)
 }
 
+// Update the value of specific environment variable
 func UpdateEnvironmentVariable(variableName string, newValueTemplate string, pars ...any) (string, error) {
 	oldValue := GetEnvironmentVariable(variableName)
 	newValue := fmt.Sprintf(newValueTemplate, pars...)
@@ -205,8 +207,45 @@ func UpdateEnvironmentVariable(variableName string, newValueTemplate string, par
 	return oldValue, err
 }
 
+// Write to sysctl.conf
 func WriteToSysctl(sysConfigTemplate string, pars ...any) error {
 	sysConfig := fmt.Sprintf(sysConfigTemplate, pars...)
 	_, err := ExecShellCmd("sudo sysctl --quiet -w %s", sysConfig)
 	return err
+}
+
+// Detect and prepare for the environment
+func PrepareEnvironment() error {
+	// Define task List
+	preTaskList := []func() error{
+		DetectArch,
+		DetectOS,
+		GetCurrentDir,
+		GetUserHomeDir,
+		CreateTmpDir,
+	}
+	// Execute task
+	for _, task := range preTaskList {
+		if err := task(); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+// Clean the Environment
+func CleanEnvironment() error {
+	// Define task List
+	cleanTaskList := []func() error{
+		CleanUpTmpDir,
+	}
+	// Execute task
+	for _, task := range cleanTaskList {
+		if err := task(); err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
