@@ -61,18 +61,22 @@ func SetupFirecrackerContainerd() error {
 	}
 	for _, bin := range binLists {
 		src, err := utils.GetVHiveFilePath(path.Join(binsDir, bin))
-		if !utils.CheckErrorWithMsg(err, "Failed to copy required files!\n") {
+		if !utils.CheckErrorWithMsg(err, "Failed to find required file: <%s>!\n", bin) {
 			return err
 		}
 		err = utils.CopyToDir(src, dstDir, true)
-		if !utils.CheckErrorWithMsg(err, "Failed to copy required files!\n") {
+		if !utils.CheckErrorWithMsg(err, "Failed to copy required file: <%s>!\n", bin) {
 			return err
 		}
 	}
 
 	// rootfs image
-	err = utils.CopyToDir(path.Join(binsDir, "default-rootfs.img"), "/var/lib/firecracker-containerd/runtime/", true)
-	if !utils.CheckErrorWithMsg(err, "Failed to copy required files!\n") {
+	rootfsImgPath, err := utils.GetVHiveFilePath(path.Join(binsDir, "default-rootfs.img"))
+	if !utils.CheckErrorWithMsg(err, "Failed to find rootfs image!\n") {
+		return err
+	}
+	err = utils.CopyToDir(rootfsImgPath, "/var/lib/firecracker-containerd/runtime/", true)
+	if !utils.CheckErrorWithMsg(err, "Failed to copy rootfs image!\n") {
 		return err
 	}
 
