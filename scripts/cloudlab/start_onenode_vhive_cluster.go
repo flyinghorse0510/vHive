@@ -25,7 +25,6 @@ package cloudlab
 import (
 	"time"
 
-	"github.com/vhive-serverless/vHive/scripts/cloudlab"
 	cluster "github.com/vhive-serverless/vHive/scripts/cluster"
 	"github.com/vhive-serverless/vHive/scripts/configs"
 	utils "github.com/vhive-serverless/vHive/scripts/utils"
@@ -55,7 +54,7 @@ func StartOnenodeVhiveCluster(sandbox string) error {
 
 	// Set up node
 	utils.WaitPrintf("Set up node")
-	if _, err = cloudlab.SetupNode(sandbox, "false"); err != nil {
+	if err = SetupNode(sandbox, "false"); err != nil {
 		return err
 	}
 
