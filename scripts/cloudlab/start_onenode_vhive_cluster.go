@@ -25,6 +25,7 @@ package cloudlab
 import (
 	"time"
 
+	"github.com/vhive-serverless/vHive/scripts/cloudlab"
 	cluster "github.com/vhive-serverless/vHive/scripts/cluster"
 	"github.com/vhive-serverless/vHive/scripts/configs"
 	utils "github.com/vhive-serverless/vHive/scripts/utils"
@@ -49,6 +50,12 @@ func StartOnenodeVhiveCluster(sandbox string) error {
 	cleanCriRunnerScriptPath := "scripts/github_runner/clean_cri_runner.sh"
 	_, err := utils.ExecVHiveBashScript(cleanCriRunnerScriptPath, sandbox)
 	if !utils.CheckErrorWithTagAndMsg(err, "Failed to clean up host resources!\n") {
+		return err
+	}
+
+	// Set up node
+	utils.WaitPrintf("Set up node")
+	if _, err = cloudlab.SetupNode(sandbox, "false"); err != nil {
 		return err
 	}
 
