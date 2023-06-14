@@ -31,6 +31,7 @@ import (
 	cluster "github.com/vhive-serverless/vHive/scripts/cluster"
 	configs "github.com/vhive-serverless/vHive/scripts/configs"
 	gpu "github.com/vhive-serverless/vHive/scripts/gpu"
+	setup "github.com/vhive-serverless/vHive/scripts/setup"
 	utils "github.com/vhive-serverless/vHive/scripts/utils"
 )
 
@@ -168,6 +169,10 @@ func main() {
 	case "setup_nvidia_gpu":
 		utils.InfoPrintf("Set up Nvidia gpu\n")
 		err = gpu.SetupNvidiaGpu()
+		// Original scripts from `scripts` directory
+	case "setup_zipkin":
+		utils.InfoPrintf("Setup zipkin")
+		err = setup.SetupZipkin()
 	default:
 		utils.FatalPrintf("Invalid subcommand --> %s! Available subcommands list: \n", subCmd)
 		for _, subCmd := range availableCmds {
