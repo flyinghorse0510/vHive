@@ -45,11 +45,16 @@ func SetupWorkerKubelet(stockContainerd string) error {
 // Create kubelet service on worker node
 func CreateWorkerKubeletService(criSock string) error {
 	utils.WaitPrintf("Creating kubelet service")
+	// Create service directory if not exist
+	_, err := utils.ExecShellCmd("sudo mkdir -p /etc/systemd/system/kubelet.service.d")
+	if !utils.CheckErrorWithMsg(err, "Failed to create kubelet service!\n") {
+		return err
+	}
 	bashCmd := `sudo sh -c 'cat <<EOF > /etc/systemd/system/kubelet.service.d/0-containerd.conf
 [Service]                                                 
 Environment="KUBELET_EXTRA_ARGS=--container-runtime=remote --runtime-request-timeout=15m --container-runtime-endpoint=unix://'%s'"
 EOF'`
-	_, err := utils.ExecShellCmd(bashCmd, criSock)
+	_, err = utils.ExecShellCmd(bashCmd, criSock)
 	if !utils.CheckErrorWithMsg(err, "Failed to create kubelet service!\n") {
 		return err
 	}

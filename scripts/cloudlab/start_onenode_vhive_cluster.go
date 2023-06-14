@@ -110,7 +110,7 @@ func StartOnenodeVhiveCluster(sandbox string) error {
 		return err
 	}
 
-	time.Sleep(time.Second)
+	time.Sleep(1 * time.Second)
 
 	utils.InfoPrintf("Create one node cluster\n")
 	if err := cluster.CreateOneNodeCluster(sandbox); err != nil {
