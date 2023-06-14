@@ -84,6 +84,7 @@ func main() {
 		"setup_nvidia_gpu",
 	}
 
+	utils.InfoPrintf("vHive repo Path: %s\n", configs.VHive.VHiveRepoPath)
 	// Check config directory
 	if len(configs.VHive.VHiveSetupConfigPath) == 0 {
 		utils.CheckVHiveRepo()
