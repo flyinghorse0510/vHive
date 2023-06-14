@@ -34,5 +34,5 @@ jobs:
           run: pushd scripts && go build -o vhive_setup && popd
         
         - name: Show scripts help info
-          run: ./vhive_setup -h
+          run: ./scripts/vhive_setup -h
         
