@@ -97,7 +97,7 @@ func CreateOneNodeKubernetes(criSock string) error {
 	} else {
 		// On a non container environment
 		utils.WaitPrintf("Creating cluster")
-		_, err = utils.ExecShellCmd(`sudo kubeadm init --ignore-preflight-errors=all --cri-socket %s --pod-network-cidr=unix://'%s'`, criSock, configs.Kube.PodNetworkCidr)
+		_, err = utils.ExecShellCmd(`sudo kubeadm init --ignore-preflight-errors=all --cri-socket unix://'%s' --pod-network-cidr=%s`, criSock, configs.Kube.PodNetworkCidr)
 		if !utils.CheckErrorWithTagAndMsg(err, "Failed to create cluster!\n") {
 			return err
 		}
