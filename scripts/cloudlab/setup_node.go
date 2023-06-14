@@ -28,12 +28,12 @@ import (
 	utils "github.com/vhive-serverless/vHive/scripts/utils"
 )
 
-func SetupNode(sandBox string, useStargz string) error {
-	if sandBox == "" {
-		sandBox = "firecracker"
+func SetupNode(sandbox string, useStargz string) error {
+	if sandbox == "" {
+		sandbox = "firecracker"
 	}
 	// Arguments Check
-	switch sandBox {
+	switch sandbox {
 	case "gvisor":
 	case "firecracker":
 	case "stock-only":
@@ -65,7 +65,7 @@ func SetupNode(sandBox string, useStargz string) error {
 	}
 
 	// Set up sandbox
-	switch sandBox {
+	switch sandbox {
 	case "firecracker":
 		// Set up firecracker
 		utils.InfoPrintf("Set up firecracker\n")
@@ -87,7 +87,7 @@ func SetupNode(sandBox string, useStargz string) error {
 		return err
 	}
 
-	switch sandBox {
+	switch sandbox {
 	// Use firecracker
 	case "firecracker":
 		// create devmapper

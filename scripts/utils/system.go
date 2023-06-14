@@ -93,7 +93,6 @@ func ExecShellCmd(cmd string, pars ...any) (string, error) {
 func DetectArch() error {
 	switch configs.System.CurrentArch {
 	case "amd64":
-	// case "arm64":
 	default:
 		// Only amd64(x86_64) are supported at present
 		FatalPrintf("Unsupported architecture: %s\n", configs.System.CurrentArch)
@@ -202,12 +201,6 @@ func InstallPackages(packagesTemplate string, pars ...any) error {
 	case "ubuntu":
 		_, err := ExecShellCmd("sudo apt-get -qq update && sudo apt-get -qq install -y --allow-downgrades %s", packages)
 		return err
-	// case "centos":
-	// 	_, err := ExecShellCmd("sudo dnf -y -q install %s", packages)
-	// 	return err
-	// case "rocky linux":
-	// 	_, err := ExecShellCmd("sudo dnf -y -q install %s", packages)
-	// 	return err
 	default:
 		FatalPrintf("Unsupported Linux distribution: %s\n", configs.System.CurrentOS)
 		return &ShellError{Msg: "Unsupported Linux distribution", ExitCode: 1}

@@ -30,13 +30,13 @@ import (
 	utils "github.com/vhive-serverless/vHive/scripts/utils"
 )
 
-func StartOnenodeVhiveCluster(sandBox string) error {
+func StartOnenodeVhiveCluster(sandbox string) error {
 
 	// Arguments check
-	if sandBox == "" {
-		sandBox = "firecracker"
+	if sandbox == "" {
+		sandbox = "firecracker"
 	}
-	switch sandBox {
+	switch sandbox {
 	case "gvisor":
 	case "firecracker":
 	default:
@@ -47,7 +47,7 @@ func StartOnenodeVhiveCluster(sandBox string) error {
 	// Clean up host resources
 	utils.WaitPrintf("Cleaning up host resources if left after previous runs")
 	cleanCriRunnerScriptPath := "scripts/github_runner/clean_cri_runner.sh"
-	_, err := utils.ExecVHiveBashScript(cleanCriRunnerScriptPath, sandBox)
+	_, err := utils.ExecVHiveBashScript(cleanCriRunnerScriptPath, sandbox)
 	if !utils.CheckErrorWithTagAndMsg(err, "Failed to clean up host resources!\n") {
 		return err
 	}
@@ -70,7 +70,7 @@ func StartOnenodeVhiveCluster(sandBox string) error {
 	time.Sleep(1 * time.Second)
 
 	// Run the containerd daemon
-	switch sandBox {
+	switch sandbox {
 	case "gvisor":
 		utils.WaitPrintf("Running the gvisor-containerd daemon")
 		_, err := utils.ExecShellCmd("sudo /usr/local/bin/gvisor-containerd --address /run/gvisor-containerd/gvisor-containerd.sock --config /etc/gvisor-containerd/config.toml 1>%s/gvisor.out 2>%s/gvisor.err &",
@@ -102,7 +102,7 @@ func StartOnenodeVhiveCluster(sandBox string) error {
 	githubVHiveArgs := utils.GetEnvironmentVariable("GITHUB_VHIVE_ARGS")
 	utils.WaitPrintf("Running vHive with \"%s\" arguments", githubVHiveArgs)
 	_, err = utils.ExecShellCmd("sudo ./vhive -sandbox %s %s 1>%s/orch.out 2>%s/orch.err &",
-		sandBox,
+		sandbox,
 		githubVHiveArgs,
 		ctrdLogDir,
 		ctrdLogDir)
@@ -113,7 +113,7 @@ func StartOnenodeVhiveCluster(sandBox string) error {
 	time.Sleep(time.Second)
 
 	utils.InfoPrintf("Create one node cluster\n")
-	if err := cluster.CreateOneNodeCluster(sandBox); err != nil {
+	if err := cluster.CreateOneNodeCluster(sandbox); err != nil {
 		return err
 	}
 
