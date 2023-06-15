@@ -53,6 +53,8 @@ jobs:
           name: ctrd-logs
           path: |
             /tmp/ctrd-logs/${{ github.run_id }}
+            ${{ github.workspace }}/*.log
+            ${{ github.workspace }}/scripts/github_runner/*.log
 
       - name: Cleaning
         if: ${{ always() }}

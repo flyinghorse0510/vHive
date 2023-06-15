@@ -40,7 +40,7 @@ $VHIVE_ROOT/scripts/vhive_setup -vhive-repo-dir $VHIVE_ROOT start_onenode_vhive_
 sleep 30s
 
 # KUBECONFIG=/etc/kubernetes/admin.conf sudo $VHIVE_ROOT/scripts/setup_zipkin.sh
-KUBECONFIG=/etc/kubernetes/admin.conf $VHIVE_ROOT/scripts/vhive_setup -vhive-repo-dir $VHIVE_ROOT setup_zipkin
+$VHIVE_ROOT/scripts/vhive_setup -vhive-repo-dir $VHIVE_ROOT setup_zipkin
 
 # FIXME (gh-709)
 #source etc/profile && go run $VHIVE_ROOT/examples/registry/populate_registry.go -imageFile $VHIVE_ROOT/examples/registry/images.txt
