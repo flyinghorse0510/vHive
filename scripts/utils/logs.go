@@ -149,13 +149,13 @@ func CreateLogs(logDir string, logFilePrefix ...string) error {
 	if len(logFilePrefix) > 0 {
 		logFilePrefixName = logFilePrefix[0]
 	}
-
-	commonLogFile, err := os.OpenFile(logDir+"/"+logFilePrefixName+"_common.log", os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0666)
+	commonLogFilePath := logDir + "/" + logFilePrefixName + "_common.log"
+	commonLogFile, err := os.OpenFile(commonLogFilePath, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0666)
 	if !CheckErrorWithMsg(err, "Failed to create log files!\n") {
 		return err
 	}
-
-	errorLogFile, err := os.OpenFile(logDir+"/"+logFilePrefixName+"_error.log", os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0666)
+	errorLogFilePath := logDir + "/" + logFilePrefixName + "_error.log"
+	errorLogFile, err := os.OpenFile(errorLogFilePath, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0666)
 	if !CheckErrorWithMsg(err, "Failed to create log files!\n") {
 		return err
 	}
@@ -166,8 +166,8 @@ func CreateLogs(logDir string, logFilePrefix ...string) error {
 
 	// Success
 	SuccessPrintf("\n")
-	SuccessPrintf("Stdout Log -> %s/vHiveSetupScriptsCommon.log\n", logDir)
-	SuccessPrintf("Stderr Log -> %s/vHiveSetupScriptsError.log\n", logDir)
+	SuccessPrintf("Stdout Log -> %s\n", commonLogFilePath)
+	SuccessPrintf("Stderr Log -> %s\n", errorLogFilePath)
 
 	return nil
 }
