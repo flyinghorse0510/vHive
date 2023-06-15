@@ -140,17 +140,22 @@ func PrintWarningInfo() {
 }
 
 // Create Logs
-func CreateLogs(logDir string) error {
+func CreateLogs(logDir string, logFilePrefix ...string) error {
 	// notify user
 	WaitPrintf("Creating log files")
 
 	// create log files
-	commonLogFile, err := os.OpenFile(logDir+"/vHiveSetupScriptsCommon.log", os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0666)
+	logFilePrefixName := "vhive_setup"
+	if len(logFilePrefix) > 0 {
+		logFilePrefixName = logFilePrefix[0]
+	}
+
+	commonLogFile, err := os.OpenFile(logDir+"/"+logFilePrefixName+"_common.log", os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0666)
 	if !CheckErrorWithMsg(err, "Failed to create log files!\n") {
 		return err
 	}
 
-	errorLogFile, err := os.OpenFile(logDir+"/vHiveSetupScriptsError.log", os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0666)
+	errorLogFile, err := os.OpenFile(logDir+"/"+logFilePrefixName+"_error.log", os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0666)
 	if !CheckErrorWithMsg(err, "Failed to create log files!\n") {
 		return err
 	}

@@ -2,12 +2,12 @@ name: vHive setup scripts build tests
 
 on:
     push:
-      branches: [ vhive-scripts-dev ]
+      branches: [ main, vhive-scripts-dev ]
       paths-ignore:
       - 'docs/**'
       - '**.md'
     pull_request:
-      branches: [ vhive-scripts-dev ]
+      branches: [ main, vhive-scripts-dev ]
       paths-ignore:
       - 'docs/**'
       - '**.md'
