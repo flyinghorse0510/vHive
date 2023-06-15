@@ -167,7 +167,7 @@ func InstallIstio() error {
 	}
 
 	// Grant permissions for other users to use
-	_, err = utils.ExecShellCmd("sudo chmod -R +x /usr/local/istio-%s/bin", configs.Knative.IstioVersion)
+	_, err = utils.ExecShellCmd("sudo chmod -R o+x /usr/local/istio-%s/bin/istioctl", configs.Knative.IstioVersion)
 	if !utils.CheckErrorWithMsg(err, "Failed to grant permissions to istioctl!\n") {
 		return err
 	}
