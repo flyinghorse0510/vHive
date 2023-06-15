@@ -165,6 +165,13 @@ func InstallIstio() error {
 	if !utils.CheckErrorWithTagAndMsg(err, "Failed to extract istio!\n") {
 		return err
 	}
+
+	// Grant permissions for other users to use
+	_, err = utils.ExecShellCmd("sudo chmod -R +x /usr/local/istio-%s/bin", configs.Knative.IstioVersion)
+	if !utils.CheckErrorWithMsg(err, "Failed to grant permissions to istioctl!\n") {
+		return err
+	}
+
 	// Update PATH
 	err = utils.AppendDirToPath("/usr/local/istio-%s/bin", configs.Knative.IstioVersion)
 	if !utils.CheckErrorWithMsg(err, "Failed to update PATH!\n") {
@@ -176,7 +183,7 @@ func InstallIstio() error {
 	if !utils.CheckErrorWithMsg(err, "Failed to find istio operator config!\n") {
 		return err
 	}
-	_, err = utils.ExecShellCmd("sudo /usr/local/istio-%s/bin/istioctl install -y -f %s", configs.Knative.IstioVersion, operatorConfigPath)
+	_, err = utils.ExecShellCmd("/usr/local/istio-%s/bin/istioctl install -y -f %s", configs.Knative.IstioVersion, operatorConfigPath)
 	if !utils.CheckErrorWithTagAndMsg(err, "Failed to deploy istio operator!\n") {
 		return err
 	}
