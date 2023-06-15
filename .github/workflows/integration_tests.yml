@@ -51,10 +51,10 @@ jobs:
         lfs: true
     
     - name: Build setup scripts
-      run: pushd scripts && go build -o vhive_setup && popd
+      run: pushd scripts && go build -o setup_tool && popd
     
     - name: Pull binaries
-      run: ./scripts/vhive_setup setup_firecracker_containerd
+      run: ./scripts/setup_tool setup_firecracker_containerd
 
     - name: Build
       run: go build -race -v -a ./...
@@ -74,4 +74,4 @@ jobs:
           
     - name: Cleaning
       if: ${{ always() }}
-      run: ./scripts/vhive_setup clean_fcctr
+      run: ./scripts/setup_tool clean_fcctr

@@ -145,7 +145,7 @@ func CreateLogs(logDir string, logFilePrefix ...string) error {
 	WaitPrintf("Creating log files")
 
 	// create log files
-	logFilePrefixName := "vhive_setup"
+	logFilePrefixName := "setup_tool"
 	if len(logFilePrefix) > 0 {
 		logFilePrefixName = logFilePrefix[0]
 	}

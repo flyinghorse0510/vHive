@@ -31,10 +31,10 @@ jobs:
           uses: actions/checkout@v3
 
         - name: Build scripts
-          run: pushd scripts && go build -o vhive_setup && popd
+          run: pushd scripts && go build -o setup_tool && popd
 
         - name: Set up Node
-          run: ./scripts/vhive_setup setup_node stock-only use-stargz
+          run: ./scripts/setup_tool setup_node stock-only use-stargz
 
         - name: Start Containerd
           run: sudo containerd &
@@ -43,10 +43,10 @@ jobs:
           run: source /etc/profile && go build
         
         - name: Run the single node cluster setup script
-          run: ./scripts/vhive_setup create_one_node_cluster stock-only && sleep 2m
+          run: ./scripts/setup_tool create_one_node_cluster stock-only && sleep 2m
 
         - name: Deploy zipkin
-          run: ./scripts/vhive_setup setup_zipkin && sleep 5s
+          run: ./scripts/setup_tool setup_zipkin && sleep 5s
 
         - name: Create helloworld container
           run: kn service create helloworld-go --image gcr.io/knative-samples/helloworld-go --env TARGET="vHive CRI test"

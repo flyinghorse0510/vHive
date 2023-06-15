@@ -34,7 +34,7 @@ jobs:
           go-version: '1.19'
 
       - name: Build setup scripts
-        run: pushd scripts && go build -o vhive_setup && popd
+        run: pushd scripts && go build -o setup_tool && popd
 
       - name: Setup vHive CRI test environment
         run: ./scripts/github_runner/setup_cri_test_env.sh ${{ inputs.sandbox }}

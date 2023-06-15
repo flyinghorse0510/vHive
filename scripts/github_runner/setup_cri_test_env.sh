@@ -35,12 +35,12 @@ fi
 SANDBOX=$1
 VHIVE_ROOT="$(git rev-parse --show-toplevel)"
 
-$VHIVE_ROOT/scripts/vhive_setup -vhive-repo-dir $VHIVE_ROOT start_onenode_vhive_cluster $SANDBOX
+$VHIVE_ROOT/scripts/setup_tool -vhive-repo-dir $VHIVE_ROOT start_onenode_vhive_cluster $SANDBOX
 # $VHIVE_ROOT/scripts/cloudlab/start_onenode_vhive_cluster.sh "$SANDBOX"
 sleep 30s
 
 # KUBECONFIG=/etc/kubernetes/admin.conf sudo $VHIVE_ROOT/scripts/setup_zipkin.sh
-$VHIVE_ROOT/scripts/vhive_setup -vhive-repo-dir $VHIVE_ROOT setup_zipkin
+$VHIVE_ROOT/scripts/setup_tool -vhive-repo-dir $VHIVE_ROOT setup_zipkin
 
 # FIXME (gh-709)
 #source etc/profile && go run $VHIVE_ROOT/examples/registry/populate_registry.go -imageFile $VHIVE_ROOT/examples/registry/images.txt
