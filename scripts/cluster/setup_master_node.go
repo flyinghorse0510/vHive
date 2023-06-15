@@ -172,11 +172,11 @@ func InstallIstio() error {
 	}
 	// Deploy istio operator
 	utils.WaitPrintf("Deploying istio operator")
-	operatorConfigPath, err := utils.DownloadToTmpDir(configs.Knative.IstioOperatorConfigUrl)
-	if !utils.CheckErrorWithMsg(err, "Failed to deploy istio operator!\n") {
+	operatorConfigPath, err := utils.GetVHiveFilePath(configs.Knative.IstioOperatorConfigPath)
+	if !utils.CheckErrorWithMsg(err, "Failed to find istio operator config!\n") {
 		return err
 	}
-	_, err = utils.ExecShellCmd("/usr/local/istio-%s/bin/istioctl install -y -f %s", configs.Knative.IstioVersion, operatorConfigPath)
+	_, err = utils.ExecShellCmd("sudo /usr/local/istio-%s/bin/istioctl install -y -f %s", configs.Knative.IstioVersion, operatorConfigPath)
 	if !utils.CheckErrorWithTagAndMsg(err, "Failed to deploy istio operator!\n") {
 		return err
 	}
@@ -216,15 +216,23 @@ func InstallLocalClusterRegistry() error {
 	if !utils.CheckErrorWithMsg(err, "Failed to install local cluster registry!\n") {
 		return err
 	}
-	configFilePath, err := utils.DownloadToTmpDir("%s", configs.Knative.LocalRegistryVolumeConfigUrl)
-	if !utils.CheckErrorWithMsg(err, "Failed to install local cluster registry!\n") {
+	configFilePath, err := utils.GetVHiveFilePath(configs.Knative.LocalRegistryVolumeConfigPath)
+	if !utils.CheckErrorWithMsg(err, "Failed to find local cluster registry config!\n") {
 		return err
 	}
 	_, err = utils.ExecShellCmd("REPO_VOL_SIZE=%s envsubst < %s | kubectl create --filename -", configs.Knative.LocalRegistryRepoVolumeSize, configFilePath)
 	if !utils.CheckErrorWithMsg(err, "Failed to install local cluster registry!\n") {
 		return err
 	}
-	_, err = utils.ExecShellCmd("kubectl create -f %s && kubectl apply -f %s", configs.Knative.LocalRegistryDockerRegistryConfigUrl, configs.Knative.LocalRegistryHostUpdateConfigUrl)
+	dockerRegistryConfigPath, err := utils.GetVHiveFilePath(configs.Knative.LocalRegistryDockerRegistryConfigPath)
+	if !utils.CheckErrorWithMsg(err, "Failed to find local cluster registry config!\n") {
+		return err
+	}
+	hostUpdateConfigPath, err := utils.GetVHiveFilePath(configs.Knative.LocalRegistryHostUpdateConfigPath)
+	if !utils.CheckErrorWithMsg(err, "Failed to find local cluster registry config!\n") {
+		return err
+	}
+	_, err = utils.ExecShellCmd("kubectl create -f %s && kubectl apply -f %s", dockerRegistryConfigPath, hostUpdateConfigPath)
 	if !utils.CheckErrorWithTagAndMsg(err, "Failed to install local cluster registry!\n") {
 		return err
 	}
@@ -234,7 +242,11 @@ func InstallLocalClusterRegistry() error {
 // Configure Magic DNS
 func ConfigureMagicDNS() error {
 	utils.WaitPrintf("Configuring Magic DNS")
-	_, err := utils.ExecShellCmd("kubectl apply -f %s", configs.Knative.MagicDNSConfigUrl)
+	magicDNSConfigPath, err := utils.GetVHiveFilePath(configs.Knative.MagicDNSConfigPath)
+	if !utils.CheckErrorWithMsg(err, "Failed to find Magic DNS config!\n") {
+		return err
+	}
+	_, err = utils.ExecShellCmd("kubectl apply -f %s", magicDNSConfigPath)
 	if !utils.CheckErrorWithTagAndMsg(err, "Failed to configure Magic DNS!\n") {
 		return err
 	}
