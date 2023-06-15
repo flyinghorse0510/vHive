@@ -45,9 +45,11 @@ $VHIVE_ROOT/scripts/vhive_setup -vhive-repo-dir $VHIVE_ROOT setup_zipkin
 # FIXME (gh-709)
 #source etc/profile && go run $VHIVE_ROOT/examples/registry/populate_registry.go -imageFile $VHIVE_ROOT/examples/registry/images.txt
 
-KUBECONFIG=/etc/kubernetes/admin.conf sudo kn service apply helloworld -f $VHIVE_ROOT/configs/knative_workloads/helloworld.yaml
+KUBECONFIG=/etc/kubernetes/admin.conf bash -c 'sudo kn service apply helloworld -f $VHIVE_ROOT/configs/knative_workloads/helloworld.yaml'
 # FIXME (gh-709)
 #KUBECONFIG=/etc/kubernetes/admin.conf sudo kn service apply helloworldlocal -f $VHIVE_ROOT/configs/knative_workloads/helloworld_local.yaml
-KUBECONFIG=/etc/kubernetes/admin.conf sudo kn service apply helloworldserial -f $VHIVE_ROOT/configs/knative_workloads/helloworldSerial.yaml
-KUBECONFIG=/etc/kubernetes/admin.conf sudo kn service apply pyaes -f $VHIVE_ROOT/configs/knative_workloads/pyaes.yaml
+#                                      ^^^^^^^ This WILL NOT work because ${KUBECONFIG} would not be set in the context when executing `kn`
+#                                      VVVVVVV Use `bash -c`` to fix the issue
+KUBECONFIG=/etc/kubernetes/admin.conf bash -c 'sudo kn service apply helloworldserial -f $VHIVE_ROOT/configs/knative_workloads/helloworldSerial.yaml'
+KUBECONFIG=/etc/kubernetes/admin.conf bash -c 'sudo kn service apply pyaes -f $VHIVE_ROOT/configs/knative_workloads/pyaes.yaml'
 sleep 30s
