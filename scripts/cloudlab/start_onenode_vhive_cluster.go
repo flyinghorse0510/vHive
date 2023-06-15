@@ -52,12 +52,6 @@ func StartOnenodeVhiveCluster(sandbox string) error {
 		return err
 	}
 
-	// Set up node
-	utils.WaitPrintf("Set up node")
-	if err = SetupNode(sandbox, "false"); err != nil {
-		return err
-	}
-
 	// Create Log directory
 	githubRunId := utils.GetEnvironmentVariable("GITHUB_RUN_ID")
 	ctrdLogDir := "/tmp/ctrd-logs/" + githubRunId
