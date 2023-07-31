@@ -46,7 +46,7 @@ jobs:
           run: ./scripts/setup_tool create_one_node_cluster stock-only && sleep 2m
 
         - name: Deploy zipkin
-          run: ./scripts/setup_tool setup_zipkin && sleep 5s
+          run: ./scripts/setup_tool setup_zipkin && sleep 1m
 
         - name: Create helloworld container
           run: kn service create helloworld-go --image gcr.io/knative-samples/helloworld-go --env TARGET="vHive CRI test"
