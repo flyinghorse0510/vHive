@@ -46,10 +46,10 @@ jobs:
           run: ./scripts/setup_tool create_one_node_cluster stock-only && sleep 2m
 
         - name: Deploy zipkin
-          run: ./scripts/setup_tool setup_zipkin && sleep 1m
+          run: ./scripts/setup_tool setup_zipkin && sleep 10s
 
         - name: Create helloworld container
-          run: kn service create helloworld-go --image gcr.io/knative-samples/helloworld-go --env TARGET="vHive CRI test"
+          run: KUBECONFIG=/etc/kubernetes/admin.conf kn service create helloworld-go --image gcr.io/knative-samples/helloworld-go --env TARGET="vHive CRI test"
 
         - name: Invoke the deployed function
           run: curl http://helloworld-go.default.192.168.1.240.sslip.io
