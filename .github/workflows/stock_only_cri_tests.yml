@@ -2,12 +2,12 @@ name: vHive stock-only mode CRI tests
 
 on:
     push:
-      branches: [ main ]
+      branches: [ main, vhive-scripts-dev ]
       paths-ignore:
       - 'docs/**'
       - '**.md'
     pull_request:
-      branches: [ main ]
+      branches: [ main, vhive-scripts-dev ]
       paths-ignore:
       - 'docs/**'
       - '**.md'
