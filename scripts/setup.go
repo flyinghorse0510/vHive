@@ -180,7 +180,7 @@ func main() {
 			os.Exit(1)
 		}
 		utils.InfoPrintf("Set up node\n")
-		if setupFlags.NArg() < 2 {
+		if setupFlags.NArg() >= 3 {
 			err = cloudlab.SetupNode(setupFlags.Args()[1], setupFlags.Args()[2])
 		} else {
 			err = cloudlab.SetupNode(setupFlags.Args()[1], "")
