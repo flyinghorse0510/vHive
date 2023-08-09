@@ -174,13 +174,18 @@ func main() {
 		err = cluster.SetupWorkerKubelet(setupFlags.Args()[1])
 		// Original scripts from `scripts/cloudlab` directory
 	case "setup_node":
-		if setupFlags.NArg() < 3 {
-			utils.FatalPrintf("Missing parameters: %s <sandbox> <use-stargz>\n", subCmd)
+		if setupFlags.NArg() < 2 {
+			utils.FatalPrintf("Missing parameters: %s <sandbox> [use-stargz]\n", subCmd)
 			utils.CleanEnvironment()
 			os.Exit(1)
 		}
 		utils.InfoPrintf("Set up node\n")
-		err = cloudlab.SetupNode(setupFlags.Args()[1], setupFlags.Args()[2])
+		if setupFlags.NArg() < 2 {
+			err = cloudlab.SetupNode(setupFlags.Args()[1], setupFlags.Args()[2])
+		} else {
+			err = cloudlab.SetupNode(setupFlags.Args()[1], "")
+		}
+
 	case "start_onenode_vhive_cluster":
 		if setupFlags.NArg() < 2 {
 			utils.FatalPrintf("Missing parameters: %s <sandbox>\n", subCmd)

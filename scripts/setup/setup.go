@@ -210,7 +210,7 @@ func SetupSystem() error {
 	if !utils.CheckErrorWithMsg(err, "Failed to install required dependencies!\n") {
 		return err
 	}
-	err = utils.InstallPackages("apt-transport-https gcc g++ make acl net-tools git-lfs bc gettext-base jq dmsetup gnupg-agent software-properties-common iproute2 nftables")
+	err = utils.InstallPackages("apt-transport-https gcc g++ make acl net-tools git-lfs bc gettext-base jq dmsetup gnupg-agent software-properties-common iproute2 nftables git-lfs")
 	if !utils.CheckErrorWithTagAndMsg(err, "Failed to install required dependencies!\n") {
 		return err
 	}
