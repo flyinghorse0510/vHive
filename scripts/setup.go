@@ -206,28 +206,28 @@ func main() {
 		utils.InfoPrintf("Set up system\n")
 		err = setup.SetupSystem()
 	case "setup_gvisor_containerd":
-		utils.InfoPrintf("Set up gvisor_containerd")
+		utils.InfoPrintf("Set up gvisor_containerd\n")
 		err = setup.SetupGvisorContainerd()
 	case "setup_firecracker_containerd":
-		utils.InfoPrintf("Set up firecracker_containerd")
+		utils.InfoPrintf("Set up firecracker_containerd\n")
 		err = setup.SetupFirecrackerContainerd()
 	case "install_stock":
-		utils.InfoPrintf("Install stock")
+		utils.InfoPrintf("Install stock\n")
 		err = setup.InstallStock()
 	case "install_pmutools":
-		utils.InfoPrintf("Install pmutools")
+		utils.InfoPrintf("Install pmutools\n")
 		err = setup.InstallPmuTools()
 	case "install_go":
-		utils.InfoPrintf("Install go")
+		utils.InfoPrintf("Install go\n")
 		err = setup.InstallGo()
 	case "create_docker_image":
-		utils.InfoPrintf("Create docker image")
+		utils.InfoPrintf("Create docker image\n")
 		err = setup.CreateDockerImage()
 	case "create_devmapper":
-		utils.InfoPrintf("Create devmapper")
+		utils.InfoPrintf("Create devmapper\n")
 		err = setup.CreateDevmapper()
 	case "clean_fcctr":
-		utils.InfoPrintf("Clean fcctr")
+		utils.InfoPrintf("Clean fcctr\n")
 		err = setup.CleanFcctr()
 	default:
 		utils.FatalPrintf("Invalid subcommand --> %s! Available subcommands list: \n", subCmd)

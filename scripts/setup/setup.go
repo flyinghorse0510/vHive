@@ -32,7 +32,10 @@ import (
 
 // Set up firecracker containerd
 func SetupFirecrackerContainerd() error {
-	_, err := utils.ExecShellCmd("sudo mkdir -p /etc/firecracker-containerd && sudo mkdir -p /var/lib/firecracker-containerd/runtime && sudo mkdir -p /etc/containerd/")
+	_, err := utils.ExecShellCmd(
+		"sudo mkdir -p /etc/firecracker-containerd" +
+			" && sudo mkdir -p /var/lib/firecracker-containerd/runtime" +
+			" && sudo mkdir -p /etc/containerd/")
 	if err != nil {
 		return err
 	}
@@ -308,10 +311,11 @@ func SetupZipkin() error {
 
 	// Enable tracing in Knative
 	utils.WaitPrintf("Enabling tracing in Knative")
-	_, err = utils.ExecShellCmd(`kubectl patch configmap/config-tracing \
--n knative-serving \
---type merge \
--p '{"data":{"backend":"zipkin","zipkin-endpoint":"http://zipkin.istio-system.svc.cluster.local:9411/api/v2/spans","debug":"true"}}'`)
+	_, err = utils.ExecShellCmd(
+		`kubectl patch configmap/config-tracing` +
+			` -n knative-serving` +
+			` --type merge` +
+			` -p '{"data":{"backend":"zipkin","zipkin-endpoint":"http://zipkin.istio-system.svc.cluster.local:9411/api/v2/spans","debug":"true"}}'`)
 	if !utils.CheckErrorWithTagAndMsg(err, "Failed to enable tracing in Knative!\n") {
 		return err
 	}
