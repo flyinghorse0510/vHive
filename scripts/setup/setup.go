@@ -111,7 +111,7 @@ func SetupFirecrackerContainerd() error {
 	}
 	if len(containerId) == 64 {
 		// Inside a container
-		_, err = utils.ExecShellCmd(`sudo sed -i "s/fc-dev-thinpool/${CONTAINERID}_thinpool/" /etc/firecracker-containerd/config.toml`)
+		_, err = utils.ExecShellCmd(`sudo sed -i "s/fc-dev-thinpool/%s_thinpool/" /etc/firecracker-containerd/config.toml`, containerId)
 		if err != nil {
 			return err
 		}

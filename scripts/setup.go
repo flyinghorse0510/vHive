@@ -73,6 +73,7 @@ func main() {
 		os.Exit(1)
 	}
 
+	// Current available commands
 	subCmd := setupFlags.Args()[0]
 	availableCmds := []string{
 		"create_multinode_cluster",
